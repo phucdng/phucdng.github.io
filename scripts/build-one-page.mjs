@@ -38,6 +38,46 @@ const sectionHeadings = new Set([
   'News-Letters [NL]', 'International Conference Papers', 'Workshops [W]', 'Posters [P]', 'Granted Projects',
 ]);
 
+// Links inherited from the original Google Sites publication list. Keys are the
+// publication identifiers that appear at the beginning of each entry.
+const resourceLinks = {
+  J10: 'https://arxiv.org/pdf/2605.25321v1',
+  J9: 'https://ieeexplore.ieee.org/document/11039836',
+  J8: 'https://ieeexplore.ieee.org/document/11028067',
+  J7: 'https://ieeexplore.ieee.org/document/10017169',
+  J6: 'https://arxiv.org/pdf/2209.00799.pdf',
+  J5: 'https://rev-jec.org/index.php/rev-jec/article/download/234/191',
+  J4: 'https://www.researchgate.net/profile/Duc_Phuc_Nguyen/publication/329350438_Log-Likelihood_Ratio_Calculation_Using_3-Bit_Soft-Decision_for_Error_Correction_in_Visible_Light_Communication_Systems/links/5c90a6bd45851564fae6e2e8/Log-Likelihood-Ratio-Calculation-Using-3-Bit-Soft-Decision-for-Error-Correction-in-Visible-Light-Communication-Systems.pdf',
+  J3: 'https://www.jstage.jst.go.jp/article/comex/7/1/7_2017XBL0138/_pdf',
+  Pt03: 'https://patentscope2.wipo.int/search/en/detail.jsf?docId=WO2025052584',
+  Pt02: 'https://patentscope2.wipo.int/search/en/WO2025041258',
+  N1: 'https://www.nict.go.jp/publication/shuppan/kihou-journal/houkoku71-1r_HTML/2025O-02-01.pdf',
+  N2: 'https://www.ieice.org/cs/gnl/gnl_vol44-1.pdf',
+  C22: 'https://ieeexplore.ieee.org/document/11366453',
+  C21: 'https://ieeexplore.ieee.org/document/11274605',
+  C20: 'https://ieeexplore.ieee.org/document/10760607',
+  C19: 'https://ieeexplore.ieee.org/document/10811315',
+  C18: 'https://ieeexplore.ieee.org/document/10811250',
+  C17: 'https://ieeexplore.ieee.org/document/10817412',
+  C15: 'https://ieeexplore.ieee.org/document/10817412',
+  C14: 'https://doi.org/10.1109/nics48868.2019.9023844',
+  C13: 'https://ieeexplore.ieee.org/abstract/document/8905168',
+  C11: 'https://arxiv.org/pdf/1805.00359',
+  C8: 'https://arxiv.org/pdf/1904.00832',
+  C6: 'https://www.researchgate.net/profile/Duc_Phuc_Nguyen/publication/311919681_PER_evaluation_of_K-min_Viterbi_decoder_for_wireless_sensors/links/5c90a8b492851c1df94a798b/PER-evaluation-of-K-min-Viterbi-decoder-for-wireless-sensors.pdf',
+  C5: 'https://ieeexplore.ieee.org/abstract/document/7888352',
+  C4: 'https://ieeexplore.ieee.org/abstract/document/7503678',
+  C3: 'https://www.researchgate.net/profile/Duc_Phuc_Nguyen/publication/283025243_A_novel_hardware_architecture_for_Noise_Cancellation_based_on_adaptive_speech_probability_density_function/links/5b1988c9aca272021cf21268/A-novel-hardware-architecture-for-Noise-Cancellation-based-on-adaptive-speech-probability-density-function.pdf',
+};
+
+function resourceLink(line) {
+  const match = line.match(/^\[\s*([A-Za-z][A-Za-z\d\s_]*)\]/);
+  const key = match?.[1].replace(/[\s_]+/g, '');
+  const url = key && resourceLinks[key];
+  if (!url) return line;
+  return line.replace(/\(\s*(View|Download)\s*\)/i, (_, label) => `(<a class="resource-link" href="${url}" target="_blank" rel="noreferrer">${label}</a>)`);
+}
+
 function formatArchive(lines, id) {
   const numbered = id === 'publications';
   const tag = numbered ? 'ol' : 'ul';
@@ -48,7 +88,7 @@ function formatArchive(lines, id) {
     const isHeading = sectionHeadings.has(line) || (id === 'teaching' && /^20\d{2}$/.test(line)) || (id === 'profile' && /^(Membership|Editorship|Reviewer):?$/.test(line));
     if (isHeading) { close(); output += `<h3>${line.replace(/\s*\[[^\]]+\]$/, '')}</h3>`; continue; }
     if (!open) { output += `<${tag} class="archive-list">`; open = true; }
-    output += `<li>${line}</li>`;
+    output += `<li>${id === 'publications' ? resourceLink(line) : line}</li>`;
   }
   close();
   return output;
