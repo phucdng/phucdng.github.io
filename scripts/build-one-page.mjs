@@ -54,7 +54,7 @@ function formatArchive(lines, id) {
   return output;
 }
 
-const content = Object.fromEntries(await Promise.all(pages.map(async ([id]) => [id, formatArchive(archiveFrom(await readFile(`${id}.html`, 'utf8'), id), id)])));
+const content = Object.fromEntries(await Promise.all(pages.map(async ([id]) => [id, formatArchive(archiveFrom(await readFile(`data/${id}-source.html`, 'utf8'), id), id)])));
 const sections = pages.map(([id, title], index) => `
       <section id="${id}">
         <p class="section-label">${String(index + 1).padStart(2, '0')} / ${title}</p>

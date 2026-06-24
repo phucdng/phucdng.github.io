@@ -10,7 +10,7 @@ Static personal academic website, ready for GitHub Pages. The canonical source i
 
 ## Update workflow
 
-The detailed content is stored locally in `profile.html`, `publications.html`, `awards.html`, `teaching.html`, and `contact.html`. The homepage is generated from these files as one academic CV page.
+The detailed source content is stored locally in `data/`. The homepage is generated from these files as one academic CV page. The legacy section URLs redirect to the corresponding part of the homepage.
 
 Run `node scripts/build-one-page.mjs` after updating any detailed content, then commit and push the workspace. You can also simply tell Codex what to update in this workspace; it will regenerate and publish the site.
 
