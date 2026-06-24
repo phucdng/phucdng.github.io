@@ -21,8 +21,13 @@ h2 { margin:0 0 30px; font-size:2.15rem; }
 main section { max-width:1040px; margin:auto; padding:62px 28px; border-top:1px solid var(--line); scroll-margin-top:25px; }
 .section-label { margin:0 0 7px; color:var(--accent); font:500 .72rem 'IBM Plex Mono',monospace; letter-spacing:.1em; text-transform:uppercase; }
 .archive-copy { max-width:920px; }
-.archive-copy p { margin:0 0 13px; white-space:normal; overflow-wrap:anywhere; }
-#publications .archive-copy p { margin-bottom:16px; }
+.archive-copy { max-width:920px; }
+.archive-copy h3 { margin:31px 0 11px; color:var(--ink); font:600 1.22rem/1.3 'IBM Plex Sans',Arial,sans-serif; }
+.archive-copy h3:first-child { margin-top:0; }
+.archive-list { margin:0 0 18px; padding-left:1.3rem; }
+.archive-list li { margin:0 0 9px; padding-left:.32rem; overflow-wrap:anywhere; }
+#publications .archive-list { padding-left:1.7rem; }
+#publications .archive-list li { margin-bottom:14px; }
 #awards, #teaching { background:var(--wash); max-width:none; padding-left:max(28px,calc((100% - 1040px)/2 + 28px)); padding-right:max(28px,calc((100% - 1040px)/2 + 28px)); }
 #contact { padding-bottom:82px; }
 footer { border-top:1px solid var(--line); padding:24px 28px; color:var(--muted); font-size:.8rem; text-align:center; }
