@@ -27,6 +27,7 @@ main section { max-width:1040px; margin:auto; padding:62px 28px; border-top:1px 
 .archive-list { margin:0 0 18px; padding-left:1.3rem; }
 .archive-list li { margin:0 0 9px; padding-left:.32rem; overflow-wrap:anywhere; }
 .resource-link { color:var(--accent); font-weight:600; }
+.resource-link::after { content:' ↗'; font-size:.78em; }
 #publications .archive-list { padding-left:1.7rem; }
 #publications .archive-list li { margin-bottom:14px; }
 #awards, #teaching { background:var(--wash); max-width:none; padding-left:max(28px,calc((100% - 1040px)/2 + 28px)); padding-right:max(28px,calc((100% - 1040px)/2 + 28px)); }
