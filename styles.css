@@ -24,8 +24,11 @@ main section { max-width:1040px; margin:auto; padding:62px 28px; border-top:1px 
 .archive-copy { max-width:920px; }
 .archive-copy h3 { margin:31px 0 11px; color:var(--ink); font:600 1.22rem/1.3 'IBM Plex Sans',Arial,sans-serif; }
 .archive-copy h3:first-child { margin-top:0; }
+.archive-copy h4 { margin:18px 0 6px; color:var(--ink); font:600 1rem/1.35 'IBM Plex Sans',Arial,sans-serif; }
 .archive-list { margin:0 0 18px; padding-left:1.3rem; }
 .archive-list li { margin:0 0 9px; padding-left:.32rem; overflow-wrap:anywhere; }
+.activity-group .archive-list { margin-bottom:10px; }
+.author-mark { text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:3px; font-weight:500; }
 .resource-link { color:var(--accent); font-weight:600; }
 .resource-link::after { content:' ↗'; font-size:.78em; }
 #publications .archive-list { padding-left:1.7rem; }
