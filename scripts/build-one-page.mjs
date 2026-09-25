@@ -41,7 +41,7 @@ const sectionHeadings = new Set([
 // Links inherited from the original Google Sites publication list. Keys are the
 // publication identifiers that appear at the beginning of each entry.
 const resourceLinks = {
-  J10: 'https://arxiv.org/pdf/2605.25321v1',
+  J10: 'https://ieeexplore.ieee.org/abstract/document/11534402',
   J9: 'https://ieeexplore.ieee.org/document/11039836',
   J8: 'https://ieeexplore.ieee.org/document/11028067',
   J7: 'https://ieeexplore.ieee.org/document/10017169',
