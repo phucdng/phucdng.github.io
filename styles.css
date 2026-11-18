@@ -8,8 +8,10 @@ a { color:var(--accent); text-decoration-thickness:1px; text-underline-offset:3p
 header { border-bottom:1px solid var(--line); background:#fff; }
 nav { max-width:1040px; margin:auto; padding:17px 28px; display:flex; align-items:center; justify-content:space-between; gap:28px; }
 .brand { color:var(--ink); font:500 .86rem 'IBM Plex Mono',monospace; text-decoration:none; letter-spacing:.06em; white-space:nowrap; }
-.nav-links { display:flex; flex-wrap:wrap; justify-content:flex-end; gap:16px; font-size:.82rem; }
+.nav-links { display:flex; flex-wrap:wrap; align-items:center; justify-content:flex-end; gap:16px; font-size:.82rem; }
 .nav-links a { color:var(--muted); text-decoration:none; }
+.nav-links .nav-tab { padding:4px 9px; border:1px solid var(--line); border-radius:4px; color:var(--accent); font-weight:600; white-space:nowrap; }
+.nav-links .nav-tab:hover, .nav-links .nav-tab:focus-visible { background:var(--wash); border-color:var(--accent); }
 .masthead { max-width:1040px; margin:auto; padding:72px 28px 58px; display:grid; grid-template-columns:minmax(0,1fr) 180px; align-items:center; gap:48px; }
 .masthead-copy { min-width:0; }
 .profile-photo { width:180px; aspect-ratio:4/5; margin:0; justify-self:end; overflow:hidden; border:1px solid var(--line); border-radius:50% / 43%; background:var(--wash); box-shadow:0 12px 28px rgba(29,37,40,.13); }

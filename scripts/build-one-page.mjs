@@ -4,6 +4,7 @@ const pages = [
   ['profile', 'Profile'],
   ['publications', 'Publications'],
   ['awards', 'Awards & Honor'],
+  ['professional-activities', 'Professional Activities'],
   ['teaching', 'Teaching'],
   ['contact', 'Contact'],
 ];
@@ -32,7 +33,7 @@ function normalize(line) {
 }
 
 const sectionHeadings = new Set([
-  'Appointments', 'Educational History', 'Professional Activities', 'Research Visiting, Training', 'Languages',
+  'Appointments', 'Educational History', 'Research Visiting, Training', 'Languages',
   'Selected Journal papers [J]', 'Patents [Pt]', 'Demonstrations/ Proof of Concept presented in International/Domestic Exhibitions [D]',
   'News-Letters [NL]', 'International Conference Papers', 'Domestic Conference Papers [D]', 'Workshops [W]', 'Posters [P]', 'Granted Projects',
 ]);
@@ -140,7 +141,7 @@ function formatArchive(lines, id) {
   let output = '';
   const close = () => { if (open) { output += `</${tag}>`; open = false; } };
   for (const line of lines) {
-    const isHeading = sectionHeadings.has(line) || (id === 'teaching' && /^20\d{2}$/.test(line)) || (id === 'profile' && /^(Membership|Editorship|Reviewer):?$/.test(line));
+    const isHeading = sectionHeadings.has(line) || (id === 'teaching' && /^20\d{2}$/.test(line)) || (id === 'profile' && line === 'Membership:') || (id === 'professional-activities' && /^(Track Co-chair|Special Session.*|TPC Member|Session Chair.*|Staff\/Secretary|Editorship|Reviewer):$/.test(line));
     if (isHeading) { close(); output += `<h3>${line.replace(/\s*\[[^\]]+\]$/, '')}</h3>`; continue; }
     if (!open) { output += `<${tag} class="archive-list">`; open = true; }
     output += `<li>${id === 'publications' ? resourceLink(line) : line}</li>`;
@@ -149,7 +150,28 @@ function formatArchive(lines, id) {
   return output;
 }
 
-const content = Object.fromEntries(await Promise.all(pages.map(async ([id]) => [id, formatArchive(archiveFrom(await readFile(`data/${id}-source.html`, 'utf8'), id), id)])));
+const profileLines = archiveFrom(await readFile('data/profile-source.html', 'utf8'), 'profile');
+const activitiesStart = profileLines.indexOf('Professional Activities');
+const membershipStart = profileLines.indexOf('Membership:');
+const researchVisitsStart = profileLines.indexOf('Research Visiting, Training');
+if (activitiesStart < 0 || membershipStart <= activitiesStart || researchVisitsStart <= membershipStart) {
+  throw new Error('Profile archive sections are missing or out of order');
+}
+
+const content = Object.fromEntries(await Promise.all(pages.map(async ([id]) => {
+  if (id === 'profile') {
+    return [id, formatArchive([
+      ...profileLines.slice(0, activitiesStart),
+      ...profileLines.slice(membershipStart, researchVisitsStart),
+      ...profileLines.slice(researchVisitsStart),
+    ], id)];
+  }
+  if (id === 'professional-activities') {
+    return [id, formatArchive(profileLines.slice(activitiesStart + 1, membershipStart), id)];
+  }
+  const source = await readFile(`data/${id}-source.html`, 'utf8');
+  return [id, formatArchive(archiveFrom(source, id), id)];
+})));
 const sections = pages.map(([id, title], index) => `
       <section id="${id}">
         <p class="section-label">${String(index + 1).padStart(2, '0')} / ${title}</p>
@@ -171,7 +193,7 @@ const page = `<!doctype html>
     <nav aria-label="Primary navigation">
       <a class="brand" href="#home">NGUYEN DUC PHUC</a>
       <div class="nav-links">
-        ${pages.map(([id, title]) => `<a href="#${id}">${title}</a>`).join('')}
+        ${pages.map(([id, title]) => `<a${id === 'professional-activities' ? ' class="nav-tab"' : ''} href="#${id}">${title}</a>`).join('')}
       </div>
     </nav>
     <div class="masthead" id="home">
